@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[255]:
-
-
 #Importacion librerias
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,15 +5,9 @@ from scipy import interpolate
 from scipy.fftpack import ifft
 
 
-# In[17]:
-
-
 #Importacion de datos
 datosSignal = np.genfromtxt("signal.dat",delimiter=",")
 datosIncompletos = np.genfromtxt("incompletos.dat",delimiter=",")
-
-
-# In[187]:
 
 
 #Ploteo datos signal
@@ -31,9 +19,6 @@ plt.title("Datos Signal.dat")
 plt.ylabel("Senal")
 plt.xlabel("Tiempo")
 plt.savefig("DuarteJohn_signal.pdf",bbox_inches="tight")
-
-
-# In[51]:
 
 
 #DFT
@@ -48,15 +33,12 @@ def furierDiscreto(datosy):
         dft[n]=valorn
     return dft
 
-
-# In[181]:
-
-
-#Ploteo transformada de furier de datosSignal
+#Transformada de furier de datosSignal
 dft=furierDiscreto(datosSignalY)
 pf = (1/(datosSignalX[1]-datosSignalX[0]))
 freq = np.concatenate((np.linspace(0,pf,len(datosSignalY))[0:256],np.linspace(-pf,0,len(datosSignalY))[255:511]))
-#Ploteo datos signal
+
+#Ploteo transformada datos signal
 plt.figure()
 plt.plot(freq,abs(dft))
 plt.title("Transformada DFT datos Signal.dat")
@@ -67,13 +49,7 @@ plt.savefig("DuarteJohn_TF.pdf",bbox_inches="tight")
 print("Se obtiene por implementacion propia las frecuencias")
 
 
-# In[ ]:
-
-
 #Frecuencias principales
-
-
-# In[175]:
 
 
 #Filtro y obtencion grafica filtrada datos signal
@@ -88,9 +64,6 @@ plt.xlabel("Tiempo")
 plt.savefig("DuarteJohn_filtrada.pdf",bbox_inches="tight")
 
 
-# In[254]:
-
-
 #Datos incompletos
 datosIX = datosIncompletos[:,0]
 datosIY = datosIncompletos[:,1]
@@ -99,17 +72,11 @@ plt.title("Datos Signal.dat")
 plt.ylabel("Senal")
 plt.xlabel("Tiempo")
 
-
-# In[253]:
-
-
 #Ploteo transformada de furier de datosSignal
 print("No se puede obtener la transformada de Furier de esta senal, debido a que la tasa de muestreo de datos es muy pequena. La cantidad de puntos no es suficiente para transformar la senal correctamente")
 
 
-# In[229]:
-
-
+#Interpolaciones datos incompletos cuadratica y cubica
 fcuadratic = interpolate.interp1d(datosIX,datosIY,kind = "quadratic")
 fcubic = interpolate.interp1d(datosIX,datosIY,kind = "cubic")
 
@@ -144,14 +111,8 @@ plt.xlabel("Frecuencia[Hz]")
 plt.savefig("DuarteJohn_TF_interpola.pdf",bbox_inches="tight")
 
 
-# In[230]:
-
-
 #Descripcion diferencias entre graficas
 print("Como se observa en la grafica de la transformada de furier para los datos incompletos originales y sus interpolaciones, se evidencia que el aumento en cantidad de datos provee una grafica acorde, tanto en interpolacion cuadratica como cubica, mientras que en el caso de la grafica original no se tiene un patron de la grafica")
-
-
-# In[252]:
 
 
 ## Filtro fc = 1000Hz
@@ -171,6 +132,8 @@ dftCua[abs(freq)>fc]=0
 funTiempoCua2=ifft(dftCua)
 dftCub[abs(freq)>fc]=0
 funTiempoCub2=ifft(dftCub)
+
+#Graficacion filtros en las tres transformadas de datos incompletos
 
 plt.figure()
 plt.subplot(321)
