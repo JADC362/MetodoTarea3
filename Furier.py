@@ -50,6 +50,8 @@ print("Se obtiene por implementacion propia las frecuencias")
 
 
 #Frecuencias principales
+print("Las frecuencias principales son:")
+print(freq[dft>100])
 
 
 #Filtro y obtencion grafica filtrada datos signal
